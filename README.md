@@ -54,4 +54,90 @@ ssh root@192.168.56.151
 ```
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/4.png?raw=true)
 
+We use some of the rules from the Link.
+
+then check the ansible project and files at management node :
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/0000.png?raw=true)
+
+All the project files has presented at my github
+
+files on management node :
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/6.png?raw=true)
+
+Edit the inventory file based on destination node(s) :
+```
+all:
+  vars:
+    ansible_user: root
+    ansible_port: 22
+  children:
+    single-node:
+      hosts:
+        192.168.56.151
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/7.png?raw=true)
+
+then ping all destination host(s) to be ok before running the ansible playbooks :
+```
+ansible all -m ping
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/8.png?raw=true)
+
+then run the playbook :
+
+```
+ansible-playbook -i inventory/RahBia.yml playbooks/hardening.yml
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/9.png?raw=true)
+
+if any error happens, check and correct it and run the playbook again
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/10.png?raw=true)
+
+Note : ansible process is idempotent, an idempotent operation is one that has no additional effect if it is called more than once with the same input parameters.
+
+```
+ansible-playbook -i inventory/RahBia.yml playbooks/hardening.yml
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/11.png?raw=true)
+
+for checking the hardening, install lynis on destination nodes :
+```
+apt install lynis
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/12.png?raw=true)
+
+run the lynis to audit the node :
+```
+./lynis audit system
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/13.png?raw=true)
+
+at final, check the grade (84 % at our case) :
+
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/14.png?raw=true)
+
+and check any warnings and suggestions :
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/15.png?raw=true)
+
+you can change the destination ssh port (to 8090 in our case) and run the playbook with that port :
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/15-1.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/16.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/17.png?raw=true)
+
+```
+ansible-playbook -i inventory/RahBia.yml playbooks/hardening.yml
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/18.png?raw=true)
+
+```
+ssh root@192.168.56.151 -p 8090
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/19.png?raw=true)
+
+```
+ss -nltp | grep ssh
+```
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/20.png?raw=true)
 
