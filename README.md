@@ -54,7 +54,7 @@ ssh root@192.168.56.151
 ```
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/4.png?raw=true)
 
-We use some of the rules from the Link.
+We use some of the rules from the Link [helm](https://github.com/dev-sec/ansible-collection-hardening).
 
 then check the ansible project and files at management node :
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/0000.png?raw=true)
