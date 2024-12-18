@@ -139,9 +139,9 @@ and check any warnings and suggestions :
 
 you can change the destination ssh port (to 8090 in our case) and run the playbook with that port :
 
-![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/15-1.png?raw=true)
-
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/16.png?raw=true)
+
+![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/15-1.png?raw=true)
 
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/17.png?raw=true)
 
