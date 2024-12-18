@@ -1,5 +1,6 @@
-# AnsibleHardening
-Hardening Linux Server with Ansible ...
+# Hardening Linux Server with Ansible ...
+
+
 
 Ansible is an open source IT automation engine that automates provisioning, configuration management, application deployment, orchestration, and many other IT processes. It is free to use, and the project benefits from the experience and intelligence of its thousands of contributors.
 What We Did
@@ -54,12 +55,12 @@ ssh root@192.168.56.151
 ```
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/4.png?raw=true)
 
-We use some of the rules from the Link [helm](https://github.com/dev-sec/ansible-collection-hardening).
+We use some of the rules from the Link [ansible-collection-hardening](https://github.com/dev-sec/ansible-collection-hardening).
 
 then check the ansible project and files at management node :
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/0000.png?raw=true)
 
-All the project files has presented at my github
+All the project files has presented at my [github](https://github.com/kayvansol/AnsibleHardening).
 
 files on management node :
 ![alt text](https://raw.githubusercontent.com/kayvansol/AnsibleHardening/refs/heads/main/img/6.png?raw=true)
