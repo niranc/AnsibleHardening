@@ -1,28 +1,42 @@
 ---
-os_new_root_password: qaz123QAZ!@#
+
+
+#############################################################
+###### 🔐 Sécurité des mots de passe et utilisateurs ########
+#############################################################
+
+#os_new_root_password: 59Mnp^PZ!jUqtHfp ne pas changer le password root
 
 os_env_user_paths: [/usr/local/sbin, /usr/local/bin, /usr/sbin, /usr/bin, /sbin, /bin]
 os_env_extra_user_paths: []
-os_auth_pw_max_age: 60
-os_auth_pw_min_age: 7 # Discourage password cycling
-os_auth_pw_warn_age: 7
-os_auth_pw_remember: 5 # Specify how many used passwords are record
-os_auth_retries: 5
-os_auth_lockout_time: 600 # Seconds (600 = 10min)
+os_auth_pw_max_age: 0 # no expiration
+os_auth_pw_min_age: 0 # no expiration
+os_auth_pw_warn_age: 0
+os_auth_pw_remember: 0 # Specify how many used passwords are record, 0 to disbale
+os_auth_retries: 0
+os_auth_lockout_time: 0 # Seconds (600 = 10min)
 os_auth_timeout: 60
-os_auth_allow_homeless: false
-os_auth_pam_oddjob_mkhomedir: false
-os_auth_pam_passwdqc_enable: true
-os_auth_pam_passwdqc_options: min=disabled,disabled,16,12,8 # Used in Debian
-os_auth_pam_pwquality_options: try_first_pass retry=3 authtok_type= # Used in RHEL7 and RHEL8
+os_auth_allow_homeless: #only home user can connect
+os_auth_pam_oddjob_mkhomedir: false #pam disabled so this rules does not take effect
+os_auth_pam_passwdqc_enable: true #pam disabled so this rules does not take effect
+os_auth_pam_passwdqc_options: min=disabled,disabled,16,12,8 # Used in Debian ##pam disabled so this rules does not take effect
+os_auth_pam_pwquality_options: try_first_pass retry=3 authtok_type= # Used in RHEL7 and RHEL8 #pam disabled so this rules does not take effect
 os_auth_root_ttys: [console, tty1, tty2, tty3, tty4, tty5, tty6]
 os_chfn_restrict: ""
+
+#############################################################
+###### 🏠 Permissions des répertoires utilisateurs ##########
+#############################################################
 
 # Set to `false` to disable "chmod 700" of home folders for regular users
 os_chmod_rootuser_home_folder: true
 os_chmod_home_folders: true
 # Specify user accounts, whose home folders shouldn't be chmodded to 700 when "os_chmod_home_folders" is enabled.
 os_ignore_home_folder_users: []
+
+#############################################################
+###### 👥 Gestion des utilisateurs privilégiés ##############
+#############################################################
 
 # May contain: change_user
 os_security_users_allow: []
@@ -34,13 +48,18 @@ os_rootuser_pw_ageing: false
 os_remove_additional_root_users: false
 
 # Set to false to disable password age enforcement on existing users
-os_user_pw_ageing: true
+os_user_pw_ageing: false
 
 # List of users, where password ageing should not be enforced even if "os_user_pw_ageing" is enabled
 os_users_without_password_ageing: []
 
 # Specify system accounts whose login should not be disabled and password not changed
 os_ignore_users: [vagrant, kitchen]
+
+#############################################################
+###### 🧩 Contrôle des permissions sur fichiers suid/sgid ###
+#############################################################
+
 os_security_kernel_enable_core_dump: false
 os_security_suid_sgid_enforce: true
 # User-defined blacklist and whitelist
@@ -49,26 +68,45 @@ os_security_suid_sgid_whitelist: []
 # If this is true, remove any suid/sgid bits from files that are not in the whitelist
 os_security_suid_sgid_remove_from_unknown: false
 
+
+#############################################################
+###### 📦 Nettoyage des paquets à risque ####################
+#############################################################
+
 # Remove packages with known security issues
 os_security_packages_clean: true
 os_security_packages_list: [xinetd, inetd, ypserv, telnet-server, rsh-server, prelink]
+
+#############################################################
+########## 🧯 Sécurité lors du démarrage (rhel, centos) #####
+#############################################################
+
+
 # Allow interactive startup (rhel, centos)
 os_security_init_prompt: true
 # Require root password for single user mode. (rhel, centos)
 os_security_init_single: false
 
+
+#############################################################
+########## 🔥 Pare-feu : IPTABLES et UFW ####################
+#############################################################
+
 # Iptables configuration
 os_iptables_enabled: true
 iptables:
-  nic_access:
-    - web_net
-    - app_net
+  #nic_access:
   tcp_port:
-    - 80
+    - 8080
     - 443
+    - 80
+    - 22
+    - 3000
+    - 8443
+    - 3306
+    - 22300
   #udp_port:
-  ip_access:
-    - 192.168.200.0/24
+  #ip_access:
 
 # Apply ufw defaults
 ufw_manage_defaults: false
@@ -90,6 +128,11 @@ ufw_ipt_modules: nf_conntrack_ftp nf_nat_ftp nf_conntrack_netbios_ns
 # Set to true to apply rules to support IPv6 (no means only IPv6 on loopback
 # accepted).
 ufw_enable_ipv6: false
+
+
+#############################################################
+############ 🧬 Sécurité Kernel (sysctl) ####################
+#############################################################
 
 sysctl_config:
   # These settings eliminate an entire class of security vulnerabilities:
@@ -322,6 +365,11 @@ sysctl_config:
 # at task 'create a combined sysctl-dict if overwrites are defined'
 sysctl_overwrite: {}
 # Disable unused filesystems
+
+#############################################################
+############ 🧬 Sécurité Kernel (sysctl) ####################
+#############################################################
+
 os_unused_filesystems:
   - cramfs
   - freevxfs
@@ -340,12 +388,24 @@ os_unused_filesystems:
 
 # Whitelist for used filesystems
 os_filesystem_whitelist: []
+
+#############################################################
+## ⚙️ Activation/désactivation des modules de sécurisation ##
+#############################################################
+
+
 # Set to false to turn the role into a no-op. Useful when using
 # the Ansible role dependency mechanism.
 os_hardening_enabled: true
 
 # Set to false to disable installing and configuring auditd.
 os_auditd_enabled: true
+
+
+#############################################################
+############## 🔍 Auditd (audit de sécurité) ################
+#############################################################
+
 os_auditd_template: etc/audit/auditd.conf.j2
 os_auditd_flush: INCREMENTAL
 os_auditd_freq: 20
@@ -364,6 +424,14 @@ os_auditd_action_mail_acct: root
 os_auditd_log_group: root
 os_auditd_num_logs: 5
 os_auditd_name_format: NONE
+
+
+
+
+#############################################################
+################## 🔧 services système ######################
+#############################################################
+
 
 # Set the SELinux state, which can be either disabled, permissive, or enforcing.
 os_selinux_state: enforcing
