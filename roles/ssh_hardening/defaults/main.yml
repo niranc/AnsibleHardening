@@ -31,10 +31,10 @@ ssh_client_password_login: false # ssh
 ssh_server_password_login: false # sshd
 
 # ports on which ssh-server should listen
-ssh_server_ports: ["8090"] # sshd
+ssh_server_ports: ["22"] # sshd
 
 # port to which ssh-client should connect
-ssh_client_port: "8090" # ssh
+ssh_client_port: "22" # ssh
 
 # one or more ip addresses, to which ssh-server should listen to.
 # Default is empty, but should be configured for security reasons!
@@ -57,7 +57,7 @@ ssh_login_grace_time: 30s
 
 # Specifies the maximum number of authentication attempts permitted per connection.
 # Once the number of failures reaches half this value, additional failures are logged.
-ssh_max_auth_retries: 3
+ssh_max_auth_retries: 15
 
 # Specifies the maximum number of open sessions permitted from a given connection
 ssh_max_sessions: 2
@@ -113,13 +113,13 @@ ssh_gssapi_delegation: false
 ssh_deny_users: "" # sshd
 
 # if specified, login is allowed only for user names that match one of the patterns.
-ssh_allow_users: "root" # sshd
+ssh_allow_users: [] # sshd
 
 # if specified, login is disallowed for users whose primary group or supplementary group list matches one of the patterns.
 ssh_deny_groups: "" # sshd
 
 # if specified, login is allowed only for users whose primary group or supplementary group list matches one of the patterns.
-ssh_allow_groups: "root" # sshd
+ssh_allow_groups: [] # sshd
 
 # change default file that contains the public keys that can be used for user authentication.
 ssh_authorized_keys_file: "" # sshd
